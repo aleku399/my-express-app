@@ -1,0 +1,12 @@
+ { 
+     "extends": "airbnb-base",
+     "rules": {
+        "prefer-destructuring": ["error", {
+         "VariableDeclarator": [{"object": false, "array": false}],
+         "AssignmentExpression": [{ "arrays": true, "objects": false }]
+            }, {
+            "enforceForRenamedProperties": true,
+            "enforceForComputedProperties": false
+            }]
+      } 
+}
