@@ -6,9 +6,10 @@ const {MongoClient} = require('mongodb');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 let db;
-MongoClient.connect('mongodb:aleku399:namatovu2017@ds251819.mlab.com:51819/aleku399', (err, database) => {
+MongoClient.connect("mongodb:sents:'Bronc12!'@ds251819.mlab.com:51819/aleku399", (err, database) => {
   if (err) return console.log(err);
   db = database
   app.listen(3000, () => {
@@ -37,12 +38,7 @@ app.post('/quotes', (req, res) => {
     name: req.query.name,
     quote: req.query.quote,
   };
-  db.collection('quotes').save(response, function (err, res) {
-    if (err) return console.log(err);
-
-    console.log('saved to database');
-    res.redirect('/form');
-  });
+  res.end(JSON.stringify(response));
 });
 const server = app.listen(3000, () => {
   const host = server.address().address;
