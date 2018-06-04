@@ -1,21 +1,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
-const {MongoClient} = require('mongodb');
+const mongoose = require('mongoose');
+const books = require('./routes/api/books');
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-let db;
-MongoClient.connect("mongodb:sents:'Bronc12!'@ds251819.mlab.com:51819/aleku399", (err, database) => {
-  if (err) return console.log(err);
-  db = database
-  app.listen(3000, () => {
-    console.log('listening on 3000');
-  });
-});
+const dbURI = "mongodb://aleku:namatovu2017@ds123331.mlab.com:23331/example"
+mongoose.connect(dbURI).then(() => console.log(`MongoDB connected`)).catch(err => console.log(err));
 
 
 app.use(express.static('public'));
@@ -40,6 +35,7 @@ app.post('/quotes', (req, res) => {
   };
   res.end(JSON.stringify(response));
 });
+app.use('/api/books', books);
 const server = app.listen(3000, () => {
   const host = server.address().address;
   const port = server.address().port;
